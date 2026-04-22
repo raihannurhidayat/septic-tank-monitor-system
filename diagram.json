@@ -1,8 +1,152 @@
 {
   "version": 1,
-  "author": "Muhamad Raihan Nurhidayat",
+  "author": "Septic Tank IoT - PRD MVP Prototype",
   "editor": "wokwi",
-  "parts": [ { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} } ],
-  "connections": [ [ "esp:TX", "$serialMonitor:RX", "", [] ], [ "esp:RX", "$serialMonitor:TX", "", [] ] ],
-  "dependencies": {}
+  "parts": [
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 200,
+      "left": 300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic",
+      "top": 0,
+      "left": 100,
+      "attrs": {
+        "distance": "50"
+      }
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht22",
+      "top": 0,
+      "left": 500,
+      "attrs": {
+        "temperature": "31",
+        "humidity": "78"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_h2s",
+      "top": 550,
+      "left": 0,
+      "attrs": {
+        "label": "H2S (MQ-136)",
+        "value": "0.3"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_ch4",
+      "top": 550,
+      "left": 150,
+      "attrs": {
+        "label": "CH4 (MQ-4)",
+        "value": "0.3"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_nh3",
+      "top": 550,
+      "left": 300,
+      "attrs": {
+        "label": "NH3 (MQ-137)",
+        "value": "0.3"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_ph",
+      "top": 550,
+      "left": 450,
+      "attrs": {
+        "label": "pH Sensor",
+        "value": "0.53"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot_turb",
+      "top": 550,
+      "left": 600,
+      "attrs": {
+        "label": "Turbidity",
+        "value": "0.2"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_green",
+      "top": 150,
+      "left": 700,
+      "attrs": {
+        "color": "green",
+        "label": "AMAN"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_yellow",
+      "top": 200,
+      "left": 700,
+      "attrs": {
+        "color": "yellow",
+        "label": "WASPADA"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_red",
+      "top": 250,
+      "left": 700,
+      "attrs": {
+        "color": "red",
+        "label": "KRITIS/GAS"
+      }
+    }
+  ],
+  "connections": [
+    ["esp:3V3",      "dht22:VCC",    "red",   []],
+    ["esp:GND.1",    "dht22:GND",    "black", []],
+    ["esp:D4",       "dht22:SDA",    "green", []],
+
+    ["esp:5V",       "ultrasonic:VCC", "red",   []],
+    ["esp:GND.2",    "ultrasonic:GND", "black", []],
+    ["esp:D5",       "ultrasonic:TRIG","yellow",[]],
+    ["esp:D18",      "ultrasonic:ECHO","blue",  []],
+
+    ["esp:3V3",      "pot_h2s:VCC",  "red",   []],
+    ["esp:GND.3",    "pot_h2s:GND",  "black", []],
+    ["esp:D34",      "pot_h2s:SIG",  "orange",[]],
+
+    ["esp:3V3",      "pot_ch4:VCC",  "red",   []],
+    ["esp:GND.4",    "pot_ch4:GND",  "black", []],
+    ["esp:D35",      "pot_ch4:SIG",  "purple",[]],
+
+    ["esp:3V3",      "pot_nh3:VCC",  "red",   []],
+    ["esp:GND.5",    "pot_nh3:GND",  "black", []],
+    ["esp:D32",      "pot_nh3:SIG",  "cyan",  []],
+
+    ["esp:3V3",      "pot_ph:VCC",   "red",   []],
+    ["esp:GND.6",    "pot_ph:GND",   "black", []],
+    ["esp:D33",      "pot_ph:SIG",   "pink",  []],
+
+    ["esp:3V3",      "pot_turb:VCC", "red",   []],
+    ["esp:GND.7",    "pot_turb:GND", "black", []],
+    ["esp:D25",      "pot_turb:SIG", "lime",  []],
+
+    ["esp:D26",      "led_green:A",  "green", []],
+    ["led_green:K",  "esp:GND.8",    "black", []],
+
+    ["esp:D27",      "led_yellow:A", "yellow",[]],
+    ["led_yellow:K", "esp:GND.9",    "black", []],
+
+    ["esp:D14",      "led_red:A",    "red",   []],
+    ["led_red:K",    "esp:GND.10",   "black", []]
+  ]
 }
